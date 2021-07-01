@@ -50,7 +50,8 @@ export interface Props {
   providers?: Provider[]
   verticalSocialLayout?: any
   view?: ViewType
-  redirectTo?: RedirectTo
+  redirectTo?: RedirectTo,
+  withSignupButton?: boolean,
 }
 
 function Auth({
@@ -162,6 +163,7 @@ function SocialAuth({
   providers,
   verticalSocialLayout,
   redirectTo,
+  withSignupButton,
   ...props
 }: Props) {
   const buttonStyles: any = {
@@ -356,7 +358,7 @@ function EmailAuth({
             {authView === VIEWS.SIGN_IN && (
               <Typography.Link
                 onClick={() => setAuthView(VIEWS.FORGOTTEN_PASSWORD)}
-              >
+                >
                 Forgot your password?
               </Typography.Link>
             )}
@@ -378,15 +380,17 @@ function EmailAuth({
               Sign in with magic link
             </Typography.Link>
           )}
-          {authView === VIEWS.SIGN_IN ? (
-            <Typography.Link onClick={() => handleViewChange(VIEWS.SIGN_UP)}>
-              Don't have an account? Sign up
-            </Typography.Link>
-          ) : (
-            <Typography.Link onClick={() => handleViewChange(VIEWS.SIGN_IN)}>
-              Do you have an account? Sign in
-            </Typography.Link>
-          )}
+          {withSignupButton &&
+           {authView === VIEWS.SIGN_IN ? (
+             <Typography.Link onClick={() => handleViewChange(VIEWS.SIGN_UP)}>
+               Don't have an account? Sign up
+             </Typography.Link>
+           ) : (
+             <Typography.Link onClick={() => handleViewChange(VIEWS.SIGN_IN)}>
+               Do you have an account? Sign in
+             </Typography.Link>
+           )}
+          }
           {message && <Typography.Text>{message}</Typography.Text>}
           {error && <Typography.Text type="danger">{error}</Typography.Text>}
         </Space>
